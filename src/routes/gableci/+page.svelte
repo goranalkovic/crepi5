@@ -238,11 +238,11 @@
 
 										<Icon
 											icon={myChoices?.[slug]?.[`i${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
-											class="size-28"
+											class="size-28 shrink-0"
 										/>
 
-										<p class="flex items-center gap-4">
-											<span class="inline-block max-w-60% text-balance">{mealName}</span>
+										<p class="flex items-center gap-4 max-w-60%">
+											<span class="text-balance">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
@@ -252,11 +252,11 @@
 											{/if}
 										</p>
 
-										<p class="mr-auto text-sm text-current/60 tabular-nums">{price}</p>
+										<p class="mr-auto text-sm text-current/60 tabular-nums shrink-0">{price}</p>
 
 										{#if customChoices.length > 0}
 											{#snippet label2()}
-												<div class="flex items-center -space-x-10">
+												<div class="flex items-center -space-x-10 shrink-0">
 													{#each customChoices as { user: otherUser, selected }, index (otherUser)}
 														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
 														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
@@ -330,11 +330,11 @@
 
 										<Icon
 											icon={myChoices?.[slug]?.[`c${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
-											class="size-28"
+											class="size-28 shrink-0"
 										/>
 
-										<p class="flex items-center gap-4">
-											<span class="inline-block max-w-60% text-balance">{mealName}</span>
+										<p class="flex items-center gap-4 max-w-60%">
+											<span class="text-balance">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
@@ -344,11 +344,11 @@
 											{/if}
 										</p>
 
-										<p class="mr-auto text-sm text-current/60 tabular-nums">{price}</p>
+										<p class="mr-auto text-sm text-current/60 tabular-nums shrink-0">{price}</p>
 
 										{#if customChoices?.length > 0}
 											{#snippet label2()}
-												<div class="flex items-center -space-x-10">
+												<div class="flex items-center -space-x-10 shrink-0">
 													{#each otherChoices as { user: otherUser, selected }, index (otherUser)}
 														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
 														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
