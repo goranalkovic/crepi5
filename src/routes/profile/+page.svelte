@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="flex w-400 flex-col items-center gap-40 self-center justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:w-[50vw] lg:max-w-1200 dark:bg-black/60"
+	class="flex w-400 flex-col items-center gap-40 self-center justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm dark:bg-black/60"
 >
 	<h1 class="font-display text-4xl">Profil</h1>
 
