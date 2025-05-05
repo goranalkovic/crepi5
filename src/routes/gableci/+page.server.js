@@ -1,13 +1,18 @@
 import { getOrCreateUserProfile } from '$lib/auth';
+import { getCurrentDate } from '$lib/gableci/index.js';
 
 export const load = async ({ depends, locals, locals: { supabase } }) => {
-	// depends('supabase:db:crepi');
-
 	const userProfile = await getOrCreateUserProfile(locals);
+
+	const currentDate = getCurrentDate();
 
 	const { data: mealData } = await supabase.from('meal-data').select().eq('valid', true).select('meals, restaurant');
 	const { data: customMealData } = await supabase.from('custom-meal-data').select().eq('valid', true).select('meals, restaurant');
-	const { data: selections } = await supabase.from('meal-selections').select();
+	const { data: selections } = await supabase
+		.from('meal-selections')
+		.select()
+		.gte('created', `${currentDate} 00:00:00`)
+		.lte('created', `${currentDate} 23:59:59`);
 	const { data: restaurants } = await supabase.from('restaurants').select('*');
 	const { data: profiles } = await supabase.from('profiles').select('*');
 
