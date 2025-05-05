@@ -80,7 +80,7 @@
 			{#if data.user}
 				<Button
 					variant="ghost"
-					href="/private">Gableci</Button
+					href="/gableci">Gableci</Button
 				>
 			{/if}
 		</div>

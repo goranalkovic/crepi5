@@ -403,25 +403,22 @@
 					{@const { name } = validRestaurants.find(({ slug }) => slug === restaurant)}
 
 					<li
-						class="flex items-center justify-between gap-8 py-4"
+						class="flex items-center gap-8 py-4"
 						animate:flip
 						transition:slide
 					>
-						<p class="flex items-center gap-8">
-							<img
-								class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
-								src="/restaurant-icons/{restaurant}.png"
-								alt=""
-								onerror={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
-									e.target.src = '/restaurant-icons/placeholder.png';
-								}}
-							/>
+						<img
+							class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
+							src="/restaurant-icons/{restaurant}.png"
+							alt=""
+							onerror={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								e.target.src = '/restaurant-icons/placeholder.png';
+							}}
+						/>
 
-							{name}
-						</p>
-						<p>{count}</p>
+						{name}
 					</li>
 				{/each}
 			</ul>

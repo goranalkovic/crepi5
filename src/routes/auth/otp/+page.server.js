@@ -27,7 +27,7 @@ export const actions = {
 				},
 			});
 		} else {
-			redirect(303, '/private');
+			redirect(303, '/gableci');
 		}
 	},
 };

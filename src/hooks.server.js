@@ -68,12 +68,12 @@ const authGuard = async ({ event, resolve }) => {
 	event.locals.user = user;
 
 
-	if (!event.locals.session && event.url.pathname.startsWith('/private')) {
+	if (!event.locals.session && event.url.pathname.startsWith('/gableci')) {
 		redirect(303, '/auth');
 	}
 
 	if (event.locals.session && event.url.pathname === '/auth') {
-		redirect(303, '/private');
+		redirect(303, '/gableci');
 	}
 
 	return resolve(event);
