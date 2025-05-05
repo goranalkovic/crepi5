@@ -113,345 +113,349 @@
 	});
 </script>
 
-<div
-	class="flex w-full flex-col items-center gap-40 self-center justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:w-[50vw] lg:max-w-1200 dark:bg-black/60"
->
-	<h1 class="font-display text-4xl">Ke bumo za gablec?</h1>
+{#if validRestaurants?.length > 0}
+	<div
+		class="flex w-full flex-col items-center gap-40 self-center justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:w-[50vw] lg:max-w-1200 dark:bg-black/60"
+	>
+		<h1 class="font-display text-4xl">Ke bumo za gablec?</h1>
 
-	<ul class="w-full space-y-20">
-		{#each validRestaurants as { name, phone, delivery, url, urlType, slug }}
-			<li class="flex flex-col py-20">
-				<div class="flex items-center gap-8">
-					<p class="font-display flex items-center gap-14 text-2xl">
-						<img
-							class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
-							src="/restaurant-icons/{slug}.png"
-							alt=""
-							onerror={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								e.target.src = '/restaurant-icons/placeholder.png';
-							}}
-						/>
-
-						<span class="translate-y-1.5">{name}</span>
-					</p>
-
-					{#snippet label()}
-						<Icon
-							icon="pixelarticons:info-box"
-							class="size-20"
-						/>
-					{/snippet}
-
-					<Popover
-						{label}
-						iconOnly
-					>
-						{#if delivery}
-							<div class="flex items-center gap-8">
-								<Icon
-									icon="pixelarticons:truck"
-									class="size-20 text-amber-400"
-								/>
-
-								{delivery}
-							</div>
-						{/if}
-
-						{#if phone}
-							<div class="flex items-center gap-8">
-								<Icon
-									icon="pixelarticons:deskphone"
-									class="size-20 text-amber-400"
-								/>
-
-								{phone}
-							</div>
-						{/if}
-
-						{#if url}
-							<Button
-								href={url}
-								target="_blank"
-								class="w-fit"
-							>
-								{urlType ?? 'Link'}
-
-								<Icon
-									icon="pixelarticons:external-link"
-									class="size-20 text-amber-400 dark:text-amber-700"
-								/>
-							</Button>
-						{/if}
-					</Popover>
-
-					{#if slug in myChoices && otherChoices.every(({ selected }) => slug in selected)}
-						<div
-							class="ml-auto flex items-center gap-8 pl-20"
-							transition:slide
-						>
-							<Icon
-								icon="pixelarticons:gps"
-								class="size-20 text-amber-400 dark:text-amber-700"
+		<ul class="w-full space-y-20">
+			{#each validRestaurants as { name, phone, delivery, url, urlType, slug }}
+				<li class="flex flex-col py-20">
+					<div class="flex items-center gap-8">
+						<p class="font-display flex items-center gap-14 text-2xl">
+							<img
+								class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
+								src="/restaurant-icons/{slug}.png"
+								alt=""
+								onerror={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									e.target.src = '/restaurant-icons/placeholder.png';
+								}}
 							/>
 
-							Intersekti!
-						</div>
-					{/if}
-				</div>
-
-				{#if slug in mealData}
-					<p class="mt-16 mb-4 text-sm text-current/60 italic">Z eksternih izvora (mAIzen tehnologija)</p>
-
-					<ul class="divide-y divide-black/10 dark:divide-white/10">
-						{#each mealData[slug] as { name: mealName, price, meta }, index}
-							{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `i${index}` in choice.selected[slug])}
-							<li>
-								<label class="flex min-h-60 items-center gap-8 py-8">
-									<input
-										type="checkbox"
-										class="sr-only appearance-none"
-										checked={myChoices?.[slug]?.[`i${index}`]}
-										onchange={(e) => {
-											const checked = e.target.checked;
-
-											updateMyChoices(checked, slug, `i${index}`);
-										}}
-									/>
-
-									<Icon
-										icon={myChoices?.[slug]?.[`i${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
-										class="size-28"
-									/>
-
-									<p class="flex items-center gap-4">
-										<span>{mealName}</span>
-										{#if meta?.isVegetarian || meta?.isVegan}
-											<Icon
-												icon="pixelarticons:label-alt"
-												class="size-20 text-emerald-300 dark:text-emerald-700"
-											/>
-										{/if}
-									</p>
-
-									<p class="mr-auto text-sm text-current/60 tabular-nums">{price}</p>
-
-									{#if customChoices.length > 0}
-										{#snippet label2()}
-											<div class="flex items-center -space-x-10">
-												{#each customChoices as { user: otherUser, selected }, index (otherUser)}
-													{@const { firstName, lastName, avatar } = profiles.find(({ email }) => email === otherUser)}
-													{@const hasFullName = firstName.length > 0 || lastName.length > 0}
-													{@const fullName = `${firstName} ${lastName}`.trim()}
-
-													<div
-														animate:flip
-														transition:scale
-													>
-														<Avatar
-															img={`/profile-pictures/${avatar}.jpg`}
-															alt={fullName}
-															fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
-															class="size-20 border-2 border-white dark:border-zinc-950"
-														/>
-													</div>
-												{/each}
-											</div>
-										{/snippet}
-										<Popover label={label2}>
-											<ul class="w-200 space-y-8 p-16">
-												{#each customChoices as { user: otherUser, selected }, index}
-													{@const { firstName, lastName, avatar } = profiles.find(({ email }) => email === otherUser)}
-													{@const hasFullName = firstName.length > 0 || lastName.length > 0}
-													{@const fullName = `${firstName} ${lastName}`.trim()}
-
-													<li class="flex items-center gap-8">
-														<Avatar
-															img={`/profile-pictures/${avatar}.jpg`}
-															alt={fullName}
-															fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
-															class="size-20"
-														/>
-
-														<p class="text-sm">
-															{#if hasFullName}
-																{fullName}
-															{:else}
-																{otherUser}
-															{/if}
-														</p>
-													</li>
-												{/each}
-											</ul>
-										</Popover>
-									{/if}
-								</label>
-							</li>
-						{/each}
-					</ul>
-				{/if}
-
-				{#if slug in customMealData}
-					<p class="mt-16 mb-4 text-sm text-current/60 italic">Z ČrepBaze (može biti old info)</p>
-
-					<ul class="divide-y divide-black/10 dark:divide-white/10">
-						{#each customMealData[slug] as { name: mealName, price, meta }, index}
-							{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `c${index}` in choice.selected[slug])}
-							<li>
-								<label class="flex min-h-60 items-center gap-8 py-8">
-									<input
-										type="checkbox"
-										class="sr-only appearance-none"
-										checked={myChoices?.[slug]?.[`c${index}`]}
-										onchange={(e) => {
-											const checked = e.target.checked;
-
-											updateMyChoices(checked, slug, `c${index}`);
-										}}
-									/>
-
-									<Icon
-										icon={myChoices?.[slug]?.[`c${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
-										class="size-28"
-									/>
-
-									<p class="flex items-center gap-4">
-										<span>{mealName}</span>
-										{#if meta?.isVegetarian || meta?.isVegan}
-											<Icon
-												icon="pixelarticons:label-alt"
-												class="size-20 text-emerald-300 dark:text-emerald-700"
-											/>
-										{/if}
-									</p>
-
-									<p class="mr-auto text-sm text-current/60 tabular-nums">{price}</p>
-
-									{#if customChoices?.length > 0}
-										{#snippet label2()}
-											<div class="flex items-center -space-x-10">
-												{#each otherChoices as { user: otherUser, selected }, index (otherUser)}
-													{@const { firstName, lastName, avatar } = profiles.find(({ email }) => email === otherUser)}
-													{@const hasFullName = firstName.length > 0 || lastName.length > 0}
-													{@const fullName = `${firstName} ${lastName}`.trim()}
-
-													<div
-														animate:flip
-														transition:scale
-													>
-														<Avatar
-															img={`/profile-pictures/${avatar}.jpg`}
-															alt={fullName}
-															fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
-															class="size-20 border-2 border-white dark:border-zinc-950"
-														/>
-													</div>
-												{/each}
-											</div>
-										{/snippet}
-										<Popover label={label2}>
-											<ul class="w-200 space-y-8 p-16">
-												{#each customChoices as { user: otherUser, selected }, index}
-													{@const { firstName, lastName, avatar } = profiles.find(({ email }) => email === otherUser)}
-													{@const hasFullName = firstName.length > 0 || lastName.length > 0}
-													{@const fullName = `${firstName} ${lastName}`.trim()}
-
-													<li class="flex items-center gap-8">
-														<Avatar
-															img={`/profile-pictures/${avatar}.jpg`}
-															alt={fullName}
-															fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
-															class="size-20"
-														/>
-
-														<p class="text-sm">
-															{#if hasFullName}
-																{fullName}
-															{:else}
-																{otherUser}
-															{/if}
-														</p>
-													</li>
-												{/each}
-											</ul>
-										</Popover>
-									{/if}
-								</label>
-							</li>
-						{/each}
-					</ul>
-				{/if}
-			</li>
-		{/each}
-	</ul>
-</div>
-
-{#if intersects.length > 0}
-	{@const realIntersects = intersects.filter(([_, count]) => count > otherChoices.length)}
-	{@const almostIntersects = intersects.filter(([_, count]) => count <= otherChoices.length)}
-
-	<div
-		transition:slide
-		class="flex w-full flex-col gap-8 self-start justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:sticky lg:top-80 lg:w-[30vw] lg:max-w-480 dark:bg-black/60"
-	>
-		{#if realIntersects.length > 0}
-			<h2 class="font-display mb-20 text-3xl">Kraljevi intersekata</h2>
-
-			<ul class="w-full">
-				{#each realIntersects as [restaurant, count], index (restaurant)}
-					{@const { name } = validRestaurants.find(({ slug }) => slug === restaurant)}
-
-					<li
-						class="flex items-center gap-8 py-4"
-						animate:flip
-						transition:slide
-					>
-						<img
-							class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
-							src="/restaurant-icons/{restaurant}.png"
-							alt=""
-							onerror={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								e.target.src = '/restaurant-icons/placeholder.png';
-							}}
-						/>
-
-						{name}
-					</li>
-				{/each}
-			</ul>
-		{:else}
-			Nema? Intersektija nema?
-		{/if}
-
-		{#if almostIntersects.length > 0}
-			<hr class="mt-20 h-px w-full border-0 bg-current/15" />
-		{/if}
-
-		{#if almostIntersects.length > 0}
-			<h2 class="font-display mt-20 mb-20 text-3xl">Skoro pa intersektiji</h2>
-
-			<ul class="w-full">
-				{#each almostIntersects as [restaurant, count], index (restaurant)}
-					{@const { name } = validRestaurants.find(({ slug }) => slug === restaurant)}
-					{@const iHaveSelected = restaurant in myChoices}
-
-					<li
-						class="flex items-center justify-between gap-8 py-4 {iHaveSelected ? 'text-current/20' : ''}"
-						animate:flip
-						transition:slide
-					>
-						<p>
-							{name}
+							<span class="translate-y-1.5">{name}</span>
 						</p>
-						<p>fali {otherChoices.length + 1 - count}</p>
-					</li>
-				{:else}
-					Nema? Intersektija nema?
-				{/each}
-			</ul>
-		{/if}
+
+						{#snippet label()}
+							<Icon
+								icon="pixelarticons:info-box"
+								class="size-20"
+							/>
+						{/snippet}
+
+						<Popover
+							{label}
+							iconOnly
+						>
+							{#if delivery}
+								<div class="flex items-center gap-8">
+									<Icon
+										icon="pixelarticons:truck"
+										class="size-20 text-amber-400"
+									/>
+
+									{delivery}
+								</div>
+							{/if}
+
+							{#if phone}
+								<div class="flex items-center gap-8">
+									<Icon
+										icon="pixelarticons:deskphone"
+										class="size-20 text-amber-400"
+									/>
+
+									{phone}
+								</div>
+							{/if}
+
+							{#if url}
+								<Button
+									href={url}
+									target="_blank"
+									class="w-fit"
+								>
+									{urlType ?? 'Link'}
+
+									<Icon
+										icon="pixelarticons:external-link"
+										class="size-20 text-amber-400 dark:text-amber-700"
+									/>
+								</Button>
+							{/if}
+						</Popover>
+
+						{#if slug in myChoices && otherChoices.every(({ selected }) => slug in selected)}
+							<div
+								class="ml-auto flex items-center gap-8 pl-20"
+								transition:slide
+							>
+								<Icon
+									icon="pixelarticons:gps"
+									class="size-20 text-amber-400 dark:text-amber-700"
+								/>
+
+								Intersekti!
+							</div>
+						{/if}
+					</div>
+
+					{#if slug in mealData}
+						<p class="mt-16 mb-4 text-sm text-current/60 italic">Z eksternih izvora (mAIzen tehnologija)</p>
+
+						<ul class="divide-y divide-black/10 dark:divide-white/10">
+							{#each mealData[slug] as { name: mealName, price, meta }, index}
+								{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `i${index}` in choice.selected[slug])}
+								<li>
+									<label class="flex min-h-60 items-center gap-8 py-8">
+										<input
+											type="checkbox"
+											class="sr-only appearance-none"
+											checked={myChoices?.[slug]?.[`i${index}`]}
+											onchange={(e) => {
+												const checked = e.target.checked;
+
+												updateMyChoices(checked, slug, `i${index}`);
+											}}
+										/>
+
+										<Icon
+											icon={myChoices?.[slug]?.[`i${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
+											class="size-28"
+										/>
+
+										<p class="flex items-center gap-4">
+											<span>{mealName}</span>
+											{#if meta?.isVegetarian || meta?.isVegan}
+												<Icon
+													icon="pixelarticons:label-alt"
+													class="size-20 text-emerald-300 dark:text-emerald-700"
+												/>
+											{/if}
+										</p>
+
+										<p class="mr-auto text-sm text-current/60 tabular-nums">{price}</p>
+
+										{#if customChoices.length > 0}
+											{#snippet label2()}
+												<div class="flex items-center -space-x-10">
+													{#each customChoices as { user: otherUser, selected }, index (otherUser)}
+														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
+														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
+														{@const fullName = `${firstName} ${lastName}`.trim()}
+
+														<div
+															animate:flip
+															transition:scale
+														>
+															<Avatar
+																img={`/profile-pictures/${avatar}.jpg`}
+																alt={fullName}
+																fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
+																class="size-20 border-2 border-white dark:border-zinc-950"
+															/>
+														</div>
+													{/each}
+												</div>
+											{/snippet}
+											<Popover label={label2}>
+												<ul class="w-200 space-y-8 p-16">
+													{#each customChoices as { user: otherUser, selected }, index}
+														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
+														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
+														{@const fullName = `${firstName} ${lastName}`.trim()}
+
+														<li class="flex items-center gap-8">
+															<Avatar
+																img={`/profile-pictures/${avatar}.jpg`}
+																alt={fullName}
+																fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
+																class="size-20"
+															/>
+
+															<p class="text-sm">
+																{#if hasFullName}
+																	{fullName}
+																{:else}
+																	{otherUser}
+																{/if}
+															</p>
+														</li>
+													{/each}
+												</ul>
+											</Popover>
+										{/if}
+									</label>
+								</li>
+							{/each}
+						</ul>
+					{/if}
+
+					{#if slug in customMealData}
+						<p class="mt-16 mb-4 text-sm text-current/60 italic">Z ČrepBaze (može biti old info)</p>
+
+						<ul class="divide-y divide-black/10 dark:divide-white/10">
+							{#each customMealData[slug] as { name: mealName, price, meta }, index}
+								{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `c${index}` in choice.selected[slug])}
+								<li>
+									<label class="flex min-h-60 items-center gap-8 py-8">
+										<input
+											type="checkbox"
+											class="sr-only appearance-none"
+											checked={myChoices?.[slug]?.[`c${index}`]}
+											onchange={(e) => {
+												const checked = e.target.checked;
+
+												updateMyChoices(checked, slug, `c${index}`);
+											}}
+										/>
+
+										<Icon
+											icon={myChoices?.[slug]?.[`c${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
+											class="size-28"
+										/>
+
+										<p class="flex items-center gap-4">
+											<span>{mealName}</span>
+											{#if meta?.isVegetarian || meta?.isVegan}
+												<Icon
+													icon="pixelarticons:label-alt"
+													class="size-20 text-emerald-300 dark:text-emerald-700"
+												/>
+											{/if}
+										</p>
+
+										<p class="mr-auto text-sm text-current/60 tabular-nums">{price}</p>
+
+										{#if customChoices?.length > 0}
+											{#snippet label2()}
+												<div class="flex items-center -space-x-10">
+													{#each otherChoices as { user: otherUser, selected }, index (otherUser)}
+														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
+														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
+														{@const fullName = `${firstName} ${lastName}`.trim()}
+
+														<div
+															animate:flip
+															transition:scale
+														>
+															<Avatar
+																img={`/profile-pictures/${avatar}.jpg`}
+																alt={fullName}
+																fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
+																class="size-20 border-2 border-white dark:border-zinc-950"
+															/>
+														</div>
+													{/each}
+												</div>
+											{/snippet}
+											<Popover label={label2}>
+												<ul class="w-200 space-y-8 p-16">
+													{#each customChoices as { user: otherUser, selected }, index}
+														{@const { firstName, lastName, avatar } = profiles.find(({ email }) => email === otherUser)}
+														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
+														{@const fullName = `${firstName} ${lastName}`.trim()}
+
+														<li class="flex items-center gap-8">
+															<Avatar
+																img={`/profile-pictures/${avatar}.jpg`}
+																alt={fullName}
+																fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : otherUser[0]}
+																class="size-20"
+															/>
+
+															<p class="text-sm">
+																{#if hasFullName}
+																	{fullName}
+																{:else}
+																	{otherUser}
+																{/if}
+															</p>
+														</li>
+													{/each}
+												</ul>
+											</Popover>
+										{/if}
+									</label>
+								</li>
+							{/each}
+						</ul>
+					{/if}
+				</li>
+			{/each}
+		</ul>
 	</div>
+
+	{#if intersects.length > 0}
+		{@const realIntersects = intersects.filter(([_, count]) => count > otherChoices.length)}
+		{@const almostIntersects = intersects.filter(([_, count]) => count <= otherChoices.length)}
+
+		<div
+			transition:slide
+			class="flex w-full flex-col gap-8 self-start justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:sticky lg:top-80 lg:w-[30vw] lg:max-w-480 dark:bg-black/60"
+		>
+			{#if realIntersects.length > 0}
+				<h2 class="font-display mb-20 text-3xl">Kraljevi intersekata</h2>
+
+				<ul class="w-full">
+					{#each realIntersects as [restaurant, count], index (restaurant)}
+						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant)}
+
+						<li
+							class="flex items-center gap-8 py-4"
+							animate:flip
+							transition:slide
+						>
+							<img
+								class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
+								src="/restaurant-icons/{restaurant}.png"
+								alt=""
+								onerror={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									e.target.src = '/restaurant-icons/placeholder.png';
+								}}
+							/>
+
+							{name}
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				Nema? Intersektija nema?
+			{/if}
+
+			{#if almostIntersects.length > 0}
+				<hr class="mt-20 h-px w-full border-0 bg-current/15" />
+			{/if}
+
+			{#if almostIntersects.length > 0}
+				<h2 class="font-display mt-20 mb-20 text-3xl">Skoro pa intersektiji</h2>
+
+				<ul class="w-full">
+					{#each almostIntersects as [restaurant, count], index (restaurant)}
+						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant)}
+						{@const iHaveSelected = restaurant in myChoices}
+
+						<li
+							class="flex items-center justify-between gap-8 py-4 {iHaveSelected ? 'text-current/20' : ''}"
+							animate:flip
+							transition:slide
+						>
+							<p>
+								{name}
+							</p>
+							<p>fali {otherChoices.length + 1 - count}</p>
+						</li>
+					{:else}
+						Nema? Intersektija nema?
+					{/each}
+				</ul>
+			{/if}
+		</div>
+	{/if}
+{:else}
+	<p>Hmmm, nema restorana?</p>
 {/if}
