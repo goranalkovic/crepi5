@@ -16,8 +16,12 @@
 
 	let validRestaurants = $derived(restaurants.filter((restaurant) => restaurant.slug in mealData || restaurant.slug in customMealData));
 
+	// svelte-ignore state_referenced_locally
 	let myChoices = $state(selections?.find(({ user: u }) => u === user.email)?.selected ?? {});
+
+	// svelte-ignore state_referenced_locally
 	let otherChoices = $state(selections?.filter(({ user: u }) => u !== user.email));
+
 	let intersects = $derived.by(() => {
 		let rawIntersects = {};
 		// My choices.
@@ -84,10 +88,10 @@
 	// Debug.
 	$effect(() => {
 		if (page?.url?.searchParams?.has('debug')) {
-			$inspect('validRestaurants', validRestaurants);
-			$inspect('myChoices', myChoices);
-			$inspect('otherChoices', otherChoices);
-			$inspect('intersects', intersects);
+			console.log('validRestaurants', $state.snapshot(validRestaurants));
+			console.log('myChoices', $state.snapshot(myChoices));
+			console.log('otherChoices', $state.snapshot(otherChoices));
+			console.log('intersects', $state.snapshot(intersects));
 		}
 	});
 
@@ -238,7 +242,8 @@
 										/>
 
 										<p class="flex items-center gap-4">
-											<span>{mealName}</span>
+											<span class="inline-block max-w-60% text-balance">{mealName}</span>
+
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
 													icon="pixelarticons:label-alt"
@@ -329,7 +334,8 @@
 										/>
 
 										<p class="flex items-center gap-4">
-											<span>{mealName}</span>
+											<span class="inline-block max-w-60% text-balance">{mealName}</span>
+
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
 													icon="pixelarticons:label-alt"
