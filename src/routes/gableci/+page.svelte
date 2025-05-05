@@ -9,6 +9,7 @@
 	import Avatar from '../../parts/Avatar.svelte';
 	import { slide, scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import { page } from '$app/state';
 
 	let { data } = $props();
 	let { mealData, customMealData, selections, restaurants, profiles, supabase, user } = $derived(data);
@@ -77,6 +78,16 @@
 
 		if (error) {
 			console.error('Error updating selections:', error);
+		}
+	});
+
+	// Debug.
+	$effect(() => {
+		if (page?.url?.searchParams?.has('debug')) {
+			$inspect('validRestaurants', validRestaurants);
+			$inspect('myChoices', myChoices);
+			$inspect('otherChoices', otherChoices);
+			$inspect('intersects', intersects);
 		}
 	});
 
