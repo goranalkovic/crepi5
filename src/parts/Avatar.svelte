@@ -8,7 +8,7 @@
 <Avatar.Root {...rest}>
 	{#if img}
 		<Avatar.Image
-			class={clsx('size-24 border border-zinc-200', className)}
+			class={clsx('size-32 rounded-full', className)}
 			src={img}
 			{alt}
 		/>

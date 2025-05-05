@@ -52,7 +52,7 @@
 />
 
 <nav
-	class="fixed right-0 bottom-40 left-0 mx-auto flex w-fit divide-x divide-black/10 rounded-2xl bg-white/85 text-black shadow-lg backdrop-blur dark:divide-white/10 dark:bg-black/60 dark:text-white"
+	class="fixed right-0 bottom-40 left-0 z-10 mx-auto flex w-fit divide-x divide-black/10 rounded-2xl bg-white/85 text-black shadow-lg backdrop-blur dark:divide-white/10 dark:bg-black/60 dark:text-white"
 >
 	<div class="flex items-center p-8">
 		<Button
@@ -87,22 +87,32 @@
 
 		<div class="flex items-center gap-8 p-8">
 			{#if data.user}
+				{@const { firstName, lastName, avatar, email } = page?.data?.userProfile ?? {}}
+				{@const hasFullName = firstName?.length > 0 || lastName?.length > 0}
+				{@const fullName = `${firstName} ${lastName}`.trim()}
+
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger
 						class={clsx(
-							'flex h-42 px-8 cursor-pointer items-center justify-center gap-8 rounded-lg transition active:scale-[0.98]',
+							'flex h-42 cursor-pointer items-center justify-center gap-8 rounded-lg px-8 transition active:scale-[0.98]',
 							'ring-amber-600/30 focus:outline-hidden focus-visible:ring-3',
 							'text-current hover:bg-amber-50/90 dark:hover:bg-amber-950/50'
 						)}
 					>
-						<Avatar fallback="GA" />
+						<Avatar
+							img={`/profile-pictures/${avatar}.jpg`}
+							alt={fullName}
+							fallback={hasFullName ? `${firstName[0]}${lastName[0]}` : email[0]}
+							class="size-20"
+						/>
+
 						<svg
 							width="14"
 							height="14"
 							viewBox="0 0 14 14"
 							fill="none"
 							xmlns="http://www.w3.org/2000/svg"
-							class="stroke-current size-10 shrink-0"
+							class="size-10 shrink-0 stroke-current"
 						>
 							<path
 								d="M1.5 9.5L7 4.5L12.5 9.5"
@@ -111,20 +121,18 @@
 						</svg>
 					</DropdownMenu.Trigger>
 
-					<DropdownMenu.Content
-						class="min-w-240 divide-y divide-black/10 rounded-2xl bg-white/80 backdrop-blur-lg dark:divide-white/10 dark:bg-black/60"
-					>
+					<DropdownMenu.Content class="min-w-240 divide-y divide-black/10 rounded-2xl bg-zinc-50 dark:divide-white/10 dark:bg-zinc-900">
 						<DropdownMenu.Group class="p-8">
 							<DropdownMenu.GroupHeading class="px-8 pb-4">
 								<span class="block text-sm select-none">
-									{#if page?.data?.userProfile?.firstName?.length < 1 && page?.data?.userProfile?.lastName?.length < 1}
+									{#if !hasFullName}
 										bezimena.bmp
 									{:else}
-										{page?.data?.userProfile?.firstName} {page?.data?.userProfile?.lastName}
+										{fullName}
 									{/if}
 								</span>
 								<span class="block text-xs text-current/50 select-none">
-									{data?.user?.email}
+									{email}
 								</span>
 							</DropdownMenu.GroupHeading>
 							<DropdownMenu.Item
@@ -167,6 +175,6 @@
 	{/if}
 </nav>
 
-<main class="m-auto">
+<main class="m-auto lg:flex gap-20 p-40 lg:pt-80 pb-140 max-lg:space-y-40">
 	{@render children()}
 </main>

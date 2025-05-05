@@ -16,15 +16,22 @@ export const getOrCreateUserProfile = async (locals) => {
 	}
 
 	if (!userData) {
-		const { data: newUserData, error: insertError } = await supabase.from('profiles').insert({
-			id: user.id,
-			firstName: '',
-			lastName: '',
-			avatar: '',
-			themeColor: '',
-			themeMode: 'system',
-			themeRadius: 1.0,
-		}).select().single();
+		console.log('Creating new user profile...');
+
+		const { data: newUserData, error: insertError } = await supabase
+			.from('profiles')
+			.upsert({
+				id: user.id,
+				firstName: '',
+				lastName: '',
+				avatar: '',
+				themeColor: '',
+				themeMode: 'system',
+				themeRadius: 1.0,
+				email: user.email,
+			})
+			.select()
+			.single();
 
 		if (insertError) {
 			console.error(insertError);

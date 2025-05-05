@@ -12,15 +12,20 @@ export const getGablecData = async (locals) => {
 	}
 
 	if (!userData) {
-		const { data: newUserData, error: insertError } = await supabase.from('profiles').insert({
-			id: user.id,
-			firstName: '',
-			lastName: '',
-			avatar: '',
-			themeColor: '',
-			themeMode: 'system',
-			themeRadius: 1.0,
-		}).select().single();
+		const { data: newUserData, error: insertError } = await supabase
+			.from('profiles')
+			.insert({
+				id: user.id,
+				firstName: '',
+				lastName: '',
+				avatar: '',
+				themeColor: '',
+				themeMode: 'system',
+				themeRadius: 1.0,
+				email: user.email,
+			})
+			.select()
+			.single();
 
 		if (insertError) {
 			console.error(insertError);
@@ -32,3 +37,5 @@ export const getGablecData = async (locals) => {
 
 	return userData;
 };
+
+export const getCurrentDate = () => new Date().toISOString().slice(0, 10);
