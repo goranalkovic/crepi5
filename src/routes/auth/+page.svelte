@@ -17,7 +17,6 @@
 			<input
 				name="email"
 				type="email"
-				value="test@email.com"
 				placeholder="Napiši tuj"
 				class={clsx(
 					'h-56 rounded-lg border border-black px-12 dark:border-white dark:text-white',
