@@ -10,11 +10,12 @@
 	import { slide, scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { enhance } from '$app/forms';
+	import { setMode } from 'mode-watcher';
 
 	let { data } = $props();
 	let { supabase, user, userProfile } = $derived(data);
 
-	$inspect(userProfile);
+	let themeField;
 </script>
 
 <div
@@ -28,9 +29,25 @@
 		class="w-full space-y-8"
 		method="POST"
 		action="?/saveProfile"
-		use:enhance
+		use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+			return async ({ result, update }) => {
+				// Try to update theme mode immediately.
+				try {
+					if (themeField?.value) {
+						const newTheme = themeField?.value;
+						setMode(newTheme);
+					}
+				} catch (error) {}
+
+				update();
+			};
+		}}
 	>
-		<input type="hidden" name="email" value={user.email}>
+		<input
+			type="hidden"
+			name="email"
+			value={user.email}
+		/>
 
 		<label class="flex items-center justify-between gap-12">
 			<p>Tema</p>
@@ -38,6 +55,7 @@
 				value={userProfile.themeMode}
 				class="w-160 rounded-xl bg-zinc-200 p-8 dark:bg-zinc-700"
 				name="themeMode"
+				bind:this={themeField}
 			>
 				<option value="system">Kak sistem veli</option>
 				<option value="light">Navek svetlo</option>
