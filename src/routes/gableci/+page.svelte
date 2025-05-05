@@ -241,7 +241,7 @@
 											class="size-28 shrink-0"
 										/>
 
-										<p class="flex items-center gap-4 max-w-60%">
+										<p class="flex items-center gap-4 max-w-3/5">
 											<span class="text-balance">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
@@ -333,7 +333,7 @@
 											class="size-28 shrink-0"
 										/>
 
-										<p class="flex items-center gap-4 max-w-60%">
+										<p class="flex items-center gap-4 max-w-3/5">
 											<span class="text-balance">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
