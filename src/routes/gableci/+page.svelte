@@ -389,8 +389,8 @@
 	</div>
 
 	{#if intersects.length > 0}
-		{@const realIntersects = intersects.filter(([_, count]) => count > otherChoices.length)}
-		{@const almostIntersects = intersects.filter(([_, count]) => count <= otherChoices.length)}
+		{@const realIntersects = intersects?.filter(([_, count]) => count > otherChoices.length)}
+		{@const almostIntersects = intersects?.filter(([_, count]) => count <= otherChoices.length)}
 
 		<div
 			transition:slide
@@ -401,7 +401,7 @@
 
 				<ul class="w-full">
 					{#each realIntersects as [restaurant, count], index (restaurant)}
-						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant)}
+						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant) ?? {}}
 
 						<li
 							class="flex items-center gap-8 py-4"
@@ -436,7 +436,7 @@
 
 				<ul class="w-full">
 					{#each almostIntersects as [restaurant, count], index (restaurant)}
-						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant)}
+						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant) ?? {}}
 						{@const iHaveSelected = restaurant in myChoices}
 
 						<li
