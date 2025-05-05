@@ -4,7 +4,7 @@
 	import '@fontsource-variable/geist-mono';
 	import 'cal-sans';
 
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidate, invalidateAll, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	import { page } from '$app/state';
@@ -36,6 +36,17 @@
 
 	let currentPath = $derived(page?.route?.id);
 	let hasLoginButtons = $derived(currentPath?.startsWith('/auth') === false);
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <ModeWatcher darkClassNames={['dark']} />
@@ -175,6 +186,6 @@
 	{/if}
 </nav>
 
-<main class="m-auto lg:flex gap-20 p-40 lg:pt-80 pb-140 max-lg:space-y-40">
+<main class="m-auto gap-20 p-40 pb-140 max-lg:space-y-40 lg:flex lg:pt-80">
 	{@render children()}
 </main>
