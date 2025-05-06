@@ -96,3 +96,7 @@
 		</Popover.Root>
 	</div>
 {/if}
+
+<svelte:head>
+  <title>One-time password | Črepi letido</title>
+</svelte:head>

@@ -128,3 +128,7 @@
 		</Button>
 	</form>
 </div>
+
+<svelte:head>
+  <title>Profil | Črepi letido</title>
+</svelte:head>

@@ -60,3 +60,7 @@
 		</Button>
 	</form>
 </div>
+
+<svelte:head>
+  <title>Prijava/registracija | Črepi letido</title>
+</svelte:head>

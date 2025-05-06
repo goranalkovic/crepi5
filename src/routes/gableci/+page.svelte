@@ -241,7 +241,7 @@
 											class="size-28 shrink-0"
 										/>
 
-										<p class="flex items-center gap-4 max-w-3/5">
+										<p class="flex max-w-3/5 items-center gap-4">
 											<span class="text-balance">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
@@ -252,11 +252,11 @@
 											{/if}
 										</p>
 
-										<p class="mr-auto text-sm text-current/60 tabular-nums shrink-0">{price}</p>
+										<p class="mr-auto shrink-0 text-sm text-current/60 tabular-nums">{price}</p>
 
 										{#if customChoices.length > 0}
 											{#snippet label2()}
-												<div class="flex items-center -space-x-10 shrink-0">
+												<div class="flex shrink-0 items-center -space-x-10">
 													{#each customChoices as { user: otherUser, selected }, index (otherUser)}
 														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
 														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
@@ -333,7 +333,7 @@
 											class="size-28 shrink-0"
 										/>
 
-										<p class="flex items-center gap-4 max-w-3/5">
+										<p class="flex max-w-3/5 items-center gap-4">
 											<span class="text-balance">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
@@ -344,11 +344,11 @@
 											{/if}
 										</p>
 
-										<p class="mr-auto text-sm text-current/60 tabular-nums shrink-0">{price}</p>
+										<p class="mr-auto shrink-0 text-sm text-current/60 tabular-nums">{price}</p>
 
 										{#if customChoices?.length > 0}
 											{#snippet label2()}
-												<div class="flex items-center -space-x-10 shrink-0">
+												<div class="flex shrink-0 items-center -space-x-10">
 													{#each otherChoices as { user: otherUser, selected }, index (otherUser)}
 														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
 														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
@@ -476,3 +476,7 @@
 {:else}
 	<p>Hmmm, nema restorana?</p>
 {/if}
+
+<svelte:head>
+  <title>Gableci | Črepi letido</title>
+</svelte:head>

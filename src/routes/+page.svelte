@@ -13,3 +13,7 @@
 	<h1 class="font-display text-4xl text-amber-950 dark:text-amber-50">Črepi letido</h1>
 	<p class="font-mono text-xs text-amber-950/50 dark:text-amber-50/60">v4.0 alpha</p>
 </div>
+
+<svelte:head>
+  <title>Dobrodošli | Črepi letido</title>
+</svelte:head>
