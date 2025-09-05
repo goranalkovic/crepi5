@@ -29,7 +29,7 @@
 			rawIntersects[restaurant] = Object.keys(choices).length > 0 ? 1 : 0;
 		});
 
-		otherChoices.forEach(({ user: otherUser, selected }) => {
+		otherChoices.filter(({selected}) => Object.keys(selected ?? {}).length > 0).forEach(({ user: otherUser, selected }) => {
 			Object.entries(selected).forEach(([restaurant, choices]) => {
 				if (rawIntersects[restaurant]) {
 					rawIntersects[restaurant] += Object.keys(choices).length > 0 ? 1 : 0;
