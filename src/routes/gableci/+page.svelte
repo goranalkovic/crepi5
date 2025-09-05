@@ -406,8 +406,8 @@
 	</div>
 
 	{#if intersects.length > 0}
-		{@const realIntersects = intersects?.filter(([_, count]) => count > otherChoices.length)}
-		{@const almostIntersects = intersects?.filter(([_, count]) => count <= otherChoices.length)}
+		{@const realIntersects = intersects?.filter(([_, count]) => count > otherChoices.length - (Object.keys(myChoices).length > 0 ? 0 : 1))}
+		{@const almostIntersects = intersects?.filter(([_, count]) => count <= otherChoices.length - (Object.keys(myChoices).length > 0 ? 0 : 1))}
 
 		<div
 			transition:slide
