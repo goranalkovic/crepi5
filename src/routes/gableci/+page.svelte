@@ -20,7 +20,7 @@
 	let myChoices = $state(selections?.find(({ user: u }) => u === user.email)?.selected ?? {});
 
 	// svelte-ignore state_referenced_locally
-	let otherChoices = $state(selections?.filter(({ user: u }) => u !== user.email));
+	let otherChoices = $state(selections?.filter(({ user: u, selected }) => u !== user.email && Object.keys(selected ?? {}).length > 0));
 
 	let intersects = $derived.by(() => {
 		let rawIntersects = {};
@@ -29,7 +29,7 @@
 			rawIntersects[restaurant] = Object.keys(choices).length > 0 ? 1 : 0;
 		});
 
-		otherChoices.filter(({selected}) => Object.keys(selected ?? {}).length > 0).forEach(({ user: otherUser, selected }) => {
+		otherChoices.forEach(({ user: otherUser, selected }) => {
 			Object.entries(selected).forEach(([restaurant, choices]) => {
 				if (rawIntersects[restaurant]) {
 					rawIntersects[restaurant] += Object.keys(choices).length > 0 ? 1 : 0;
