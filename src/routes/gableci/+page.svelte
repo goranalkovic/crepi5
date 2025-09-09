@@ -315,9 +315,8 @@
 
 						<ul class="divide-y divide-black/10 dark:divide-white/10">
 							{#each customMealData[slug] as { name: mealName, price, meta }, index}
-								{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `c${index}` in choice.selected[slug])}
+								{@const customChoicesCustom = otherChoices.filter((choice) => slug in choice.selected && `c${index}` in choice.selected[slug])}
 
-								{console.log(slug, 'customChoices', customChoices)}
 								<li>
 									<label class="flex min-h-60 items-center gap-8 py-8">
 										<input
@@ -349,8 +348,8 @@
 
 										<p class="mr-auto shrink-0 text-sm text-current/60 tabular-nums">{price}</p>
 
-										{#if customChoices?.length > 0}
-											{#snippet label2()}
+										{#if customChoicesCustom?.length > 0}
+											{#snippet label3()}
 												<div class="flex shrink-0 items-center -space-x-10">
 													{#each otherChoices as { user: otherUser, selected }, index (otherUser)}
 														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
@@ -371,9 +370,9 @@
 													{/each}
 												</div>
 											{/snippet}
-											<Popover label={label2}>
+											<Popover label={label3}>
 												<ul class="w-200 space-y-8 p-16">
-													{#each customChoices as { user: otherUser, selected }, index}
+													{#each customChoicesCustom as { user: otherUser, selected }, index}
 														{@const { firstName, lastName, avatar } = profiles.find(({ email }) => email === otherUser)}
 														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
 														{@const fullName = `${firstName} ${lastName}`.trim()}
