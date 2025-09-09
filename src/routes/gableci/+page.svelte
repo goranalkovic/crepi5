@@ -337,7 +337,7 @@
 
 										<p class="flex max-w-3/5 items-center gap-4">
 											{#if meta?.coralDay}
-											<span class="uppercase p-2 bg-black text-white rounded-sm text-sm shrink-0 inline-block">{meta?.coralDay}</span>
+											<span class="uppercase px-3 py-0.5 bg-black text-white rounded-sm text-sm shrink-0 inline-block">{meta?.coralDay}</span>
 											{/if}
 
 											<span class="text-balance">{mealName}</span>
