@@ -223,7 +223,7 @@
 						<ul class="divide-y divide-black/10 dark:divide-white/10">
 							{#each mealData[slug] as { name: mealName, price, meta }, index}
 								{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `i${index}` in choice.selected[slug])}
-								{console.log(slug, 'customChoices', customChoices)}
+
 								<li>
 									<label class="flex min-h-60 items-center gap-8 py-8">
 										<input
@@ -316,6 +316,8 @@
 						<ul class="divide-y divide-black/10 dark:divide-white/10">
 							{#each customMealData[slug] as { name: mealName, price, meta }, index}
 								{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `c${index}` in choice.selected[slug])}
+
+								{console.log(slug, 'customChoices', customChoices)}
 								<li>
 									<label class="flex min-h-60 items-center gap-8 py-8">
 										<input
