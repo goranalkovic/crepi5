@@ -338,6 +338,10 @@
 										<p class="flex max-w-3/5 items-center gap-4">
 											<span class="text-balance">{mealName}</span>
 
+											{#if meta?.coralDay}
+											<span>(samo {meta?.coralDay})</span>
+											{/if}
+
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
 													icon="pixelarticons:label-alt"
