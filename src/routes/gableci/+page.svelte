@@ -351,7 +351,7 @@
 										{#if customChoicesCustom?.length > 0}
 											{#snippet label3()}
 												<div class="flex shrink-0 items-center -space-x-10">
-													{#each otherChoices as { user: otherUser, selected }, index (otherUser)}
+													{#each customChoicesCustom as { user: otherUser, selected }, index (otherUser)}
 														{@const { firstName, lastName, avatar } = profiles?.find(({ email }) => email === otherUser)}
 														{@const hasFullName = firstName.length > 0 || lastName.length > 0}
 														{@const fullName = `${firstName} ${lastName}`.trim()}
