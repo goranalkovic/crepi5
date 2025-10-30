@@ -15,7 +15,7 @@
 	/>
 
 	<h1 class="font-display text-4xl text-amber-950 dark:text-amber-50">Črepi letido</h1>
-	<p class="font-mono text-xs text-amber-950/50 dark:text-amber-50/60">v4.0 alpha</p>
+	<p class="font-mono text-xs text-amber-950/50 dark:text-amber-50/60">v4.0 alpha 2</p>
 
 	{#if userProfile && (userProfile?.firstName?.length < 1 || userProfile?.lastName?.length < 1 || userProfile?.avatar?.length < 1)}
 		<div

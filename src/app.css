@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
+@plugin "tailwindcss-motion";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -11,4 +12,10 @@
 	--font-mono: 'Geist Mono Variable', monospace;
 
 	--font-display: 'Cal Sans', 'Geist Variable', sans-serif;
+}
+
+@utility transition-plus {
+	transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, visibility, content-visibility, overlay, pointer-events, border-radius;
+	transition-timing-function: var(--tw-ease, var(--default-transition-timing-function) /* cubic-bezier(0.4, 0, 0.2, 1) */);
+	transition-duration: var(--tw-duration, var(--default-transition-duration) /* 150ms */);
 }

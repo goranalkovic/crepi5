@@ -129,18 +129,35 @@
 </script>
 
 {#if validRestaurants?.length > 0}
-	<div
-		class="flex w-full flex-col items-center gap-40 self-center justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:w-[50vw] lg:max-w-1200 dark:bg-black/60"
-	>
-		<h1 class="font-display text-4xl">Ke bumo za gablec?</h1>
+	<div>
+		<h1 class="font-display mb-40 text-7xl text-white text-shadow-black/10 text-shadow-lg max-lg:mt-40 dark:text-blue-50">
+			Ke bumo za gablec?
+		</h1>
 
-		<ul class="w-full space-y-20">
+		<ul class="w-full space-y-20 lg:space-y-40">
 			{#each validRestaurants as { name, phone, delivery, url, urlType, slug }}
-				<li class="flex flex-col py-20">
-					<div class="flex items-center gap-8">
-						<p class="font-display flex items-center gap-14 text-2xl">
+				<li
+					class="transition-plus flex w-full flex-col self-center justify-self-center rounded-2xl bg-white/20 bg-linear-to-b from-white/10 from-20% to-white/30 p-20 shadow-lg inset-shadow-sm shadow-black/10 inset-shadow-white/15 backdrop-blur-sm backdrop-saturate-120 not-dark:backdrop-brightness-110 has-[[data-intersect]]:rounded-3xl has-[[data-intersect]]:backdrop-blur-xl lg:w-[50vw] lg:max-w-1200 lg:rounded-4xl lg:p-40 lg:has-[[data-intersect]]:rounded-[4rem] dark:bg-black/30 dark:from-black/5 dark:to-black/15 dark:inset-shadow-white/5 dark:backdrop-brightness-95"
+				>
+					{#if slug in myChoices && otherChoices.every(({ selected }) => slug in selected)}
+							<div
+								data-intersect="true"
+								class="motion-preset-pop motion-delay-175 flex items-center gap-8 pb-20 font-medium max-lg:mr-auto max-lg:flex-row-reverse lg:ml-auto lg:hidden"
+								transition:slide
+							>
+								Intersekti!
+
+								<Icon
+									icon="pixelarticons:bullseye-arrow"
+									class="size-26 rounded-md bg-amber-200 p-2 text-amber-800 dark:bg-amber-700 dark:text-amber-950"
+								/>
+							</div>
+						{/if}
+
+					<div class="flex items-center gap-10">
+						<p class="font-display flex items-center gap-10 text-4xl leading-none">
 							<img
-								class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
+								class="flex size-44 items-center justify-center rounded-lg bg-white p-6 dark:bg-black"
 								src="/restaurant-icons/{slug}.png"
 								alt=""
 								onerror={(e) => {
@@ -150,69 +167,74 @@
 								}}
 							/>
 
-							<span class="translate-y-1.5">{name}</span>
-						</p>
+							<span class="inline-flex items-center-safe gap-4 text-pretty">
+								<span class="translate-y-3">
+									{name}
+								</span>
 
-						{#snippet label()}
-							<Icon
-								icon="pixelarticons:info-box"
-								class="size-20"
-							/>
-						{/snippet}
-
-						<Popover
-							{label}
-							iconOnly
-						>
-							{#if delivery}
-								<div class="flex items-center gap-8">
+								{#snippet label()}
 									<Icon
-										icon="pixelarticons:truck"
-										class="size-20 text-amber-400"
+										icon="pixelarticons:notes-multiple"
+										class="size-20"
 									/>
+								{/snippet}
 
-									{delivery}
-								</div>
-							{/if}
-
-							{#if phone}
-								<div class="flex items-center gap-8">
-									<Icon
-										icon="pixelarticons:deskphone"
-										class="size-20 text-amber-400"
-									/>
-
-									{phone}
-								</div>
-							{/if}
-
-							{#if url}
-								<Button
-									href={url}
-									target="_blank"
-									class="w-fit"
+								<Popover
+									{label}
+									iconOnly
 								>
-									{urlType ?? 'Link'}
+									{#if delivery}
+										<div class="flex items-center gap-8">
+											<Icon
+												icon="pixelarticons:truck"
+												class="size-20 text-amber-400"
+											/>
 
-									<Icon
-										icon="pixelarticons:external-link"
-										class="size-20 text-amber-400 dark:text-amber-700"
-									/>
-								</Button>
-							{/if}
-						</Popover>
+											{delivery}
+										</div>
+									{/if}
+
+									{#if phone}
+										<div class="flex items-center gap-8">
+											<Icon
+												icon="pixelarticons:deskphone"
+												class="size-20 text-amber-400"
+											/>
+
+											{phone}
+										</div>
+									{/if}
+
+									{#if url}
+										<Button
+											href={url}
+											target="_blank"
+											class="w-fit"
+										>
+											{urlType ?? 'Link'}
+
+											<Icon
+												icon="pixelarticons:external-link"
+												class="size-20 text-amber-400 dark:text-amber-700"
+											/>
+										</Button>
+									{/if}
+								</Popover>
+							</span>
+						</p>
 
 						{#if slug in myChoices && otherChoices.every(({ selected }) => slug in selected)}
 							<div
-								class="ml-auto flex items-center gap-8 pl-20"
+								data-intersect="true"
+								class="motion-preset-pop motion-delay-175 flex items-center gap-8 pb-20 font-medium max-lg:mr-auto max-lg:flex-row-reverse lg:ml-auto max-lg:hidden"
 								transition:slide
 							>
-								<Icon
-									icon="pixelarticons:gps"
-									class="size-20 text-amber-400 dark:text-amber-700"
-								/>
-
 								Intersekti!
+
+								<Icon
+									icon="pixelarticons:bullseye-arrow"
+									class="size-26 rounded-md bg-amber-200 p-2 text-amber-800 dark:bg-amber-700 dark:text-amber-950"
+								/>
 							</div>
 						{/if}
 					</div>
@@ -220,12 +242,12 @@
 					{#if slug in mealData}
 						<p class="mt-16 mb-4 text-sm text-current/60 italic">Z eksternih izvora (mAIzen tehnologija)</p>
 
-						<ul class="divide-y divide-black/10 dark:divide-white/10">
+						<ul>
 							{#each mealData[slug] as { name: mealName, price, meta }, index}
 								{@const customChoices = otherChoices.filter((choice) => slug in choice.selected && `i${index}` in choice.selected[slug])}
 
 								<li>
-									<label class="flex min-h-60 items-center gap-8 py-8">
+									<label class="group flex min-h-48 items-center gap-8 hover:select-none">
 										<input
 											type="checkbox"
 											class="sr-only appearance-none"
@@ -233,17 +255,22 @@
 											onchange={(e) => {
 												const checked = e.target.checked;
 
+												e.target.classList.remove('motion-preset-pop');
+												e.target.classList.add('motion-preset-pop');
+
 												updateMyChoices(checked, slug, `i${index}`);
 											}}
 										/>
 
 										<Icon
 											icon={myChoices?.[slug]?.[`i${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
-											class="size-28 shrink-0"
+											class="size-28 shrink-0 duration-200 ease-out group-hover:scale-105 group-active:scale-95 {myChoices?.[slug]?.[
+												`i${index}`
+											] && 'motion-preset-shake'} motion-duration-500 motion-ease-spring-bounciest"
 										/>
 
-										<p class="flex max-w-3/5 items-center gap-4">
-											<span class="text-balance">{mealName}</span>
+										<p class="flex items-center gap-4">
+											<span class="text-pretty">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
@@ -313,12 +340,14 @@
 					{#if slug in customMealData}
 						<p class="mt-16 mb-4 text-sm text-current/60 italic">Z ČrepBaze (može biti old info)</p>
 
-						<ul class="divide-y divide-black/10 dark:divide-white/10">
+						<ul>
 							{#each customMealData[slug] as { name: mealName, price, meta }, index}
-								{@const customChoicesCustom = otherChoices.filter((choice) => slug in choice.selected && `c${index}` in choice.selected[slug])}
+								{@const customChoicesCustom = otherChoices.filter(
+									(choice) => slug in choice.selected && `c${index}` in choice.selected[slug]
+								)}
 
 								<li>
-									<label class="flex min-h-60 items-center gap-8 py-8">
+									<label class="group flex min-h-48 items-center gap-8 hover:select-none">
 										<input
 											type="checkbox"
 											class="sr-only appearance-none"
@@ -332,16 +361,18 @@
 
 										<Icon
 											icon={myChoices?.[slug]?.[`c${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
-											class="size-28 shrink-0"
+											class="size-28 shrink-0 {myChoices?.[slug]?.[`c${index}`] &&
+												'motion-preset-shake'} motion-duration-500 motion-ease-spring-bounciest"
 										/>
 
 										<p class="flex max-w-3/5 items-center gap-4">
 											{#if meta?.coralDay}
-											<span class="uppercase px-3 py-0.5 bg-black text-white rounded-sm text-sm shrink-0 inline-block">{meta?.coralDay}</span>
+												<span class="inline-block shrink-0 rounded-sm bg-black px-3 py-0.5 text-sm text-white uppercase"
+													>{meta?.coralDay}</span
+												>
 											{/if}
 
-											<span class="text-balance">{mealName}</span>
-
+											<span class="text-pretty">{mealName}</span>
 
 											{#if meta?.isVegetarian || meta?.isVegan}
 												<Icon
@@ -414,26 +445,35 @@
 
 	{#if intersects.length > 0}
 		{@const realIntersects = intersects?.filter(([_, count]) => count > otherChoices.length - (Object.keys(myChoices).length > 0 ? 0 : 1))}
-		{@const almostIntersects = intersects?.filter(([_, count]) => count <= otherChoices.length - (Object.keys(myChoices).length > 0 ? 0 : 1))}
+		{@const almostIntersects = intersects?.filter(
+			([_, count]) => count <= otherChoices.length - (Object.keys(myChoices).length > 0 ? 0 : 1)
+		)}
 
 		<div
 			transition:slide
-			class="flex w-full flex-col gap-8 self-start justify-self-center rounded-2xl bg-white/90 p-40 shadow backdrop-blur-sm lg:sticky lg:top-80 lg:w-[30vw] lg:max-w-480 dark:bg-black/60"
+			class="flex w-full flex-col gap-8 self-start justify-self-center rounded-2xl bg-white/20 bg-linear-to-b from-white/8 from-20% to-white/40 p-20 shadow-lg inset-shadow-sm shadow-black/10 inset-shadow-white/15 backdrop-blur-sm backdrop-saturate-120 not-dark:backdrop-brightness-110 lg:sticky lg:top-80 lg:mt-106 lg:w-[30vw] lg:max-w-480 lg:rounded-4xl lg:p-40 dark:bg-black/30 dark:from-black/5 dark:to-black/15 dark:inset-shadow-white/5 dark:backdrop-brightness-95"
 		>
 			{#if realIntersects.length > 0}
-				<h2 class="font-display mb-20 text-3xl">Kraljevi intersekata</h2>
+				<h2 class="font-display flex w-fit items-center gap-10 text-3xl leading-none">
+					<Icon
+						icon="pixelarticons:trophy"
+						class="not-hover:motion-paused motion-preset-spin motion-duration-1000 size-32 -translate-y-2 text-amber-800 dark:text-amber-200"
+					/>
 
-				<ul class="w-full">
+					Kraljevi intersekata
+				</h2>
+
+				<ul class="mt-20 w-full">
 					{#each realIntersects as [restaurant, count], index (restaurant)}
 						{@const { name } = validRestaurants?.find(({ slug }) => slug === restaurant) ?? {}}
 
 						<li
-							class="flex items-center gap-8 py-4"
+							class="group flex items-center gap-8 py-4"
 							animate:flip
 							transition:slide
 						>
 							<img
-								class="flex size-36 items-center justify-center rounded-lg bg-zinc-800 p-6"
+								class="flex size-36 items-center justify-center rounded-lg bg-white p-6 dark:bg-black"
 								src="/restaurant-icons/{restaurant}.png"
 								alt=""
 								onerror={(e) => {
@@ -485,5 +525,5 @@
 {/if}
 
 <svelte:head>
-  <title>Gableci | Črepi letido</title>
+	<title>Gableci | Črepi letido</title>
 </svelte:head>

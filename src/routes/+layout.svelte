@@ -186,6 +186,6 @@
 	{/if}
 </nav>
 
-<main class="m-auto gap-20 p-40 pb-140 max-lg:space-y-40 lg:flex lg:pt-80">
+<main class="m-auto gap-20 lg:gap-40 p-40 pb-140 max-lg:space-y-40 lg:flex lg:pt-80">
 	{@render children()}
 </main>
