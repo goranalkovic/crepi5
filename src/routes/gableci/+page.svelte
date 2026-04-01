@@ -134,25 +134,38 @@
 			Ke bumo za gablec?
 		</h1>
 
+		<Button
+			onclick={() => {
+				document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+					if (Math.random() < 0.5) {
+						checkbox.click();
+					}
+				});
+			}}
+			class="mb-40"
+		>
+			✨ Odaberi pomoću mAIzen tehnologije
+		</Button>
+
 		<ul class="w-full space-y-20 lg:space-y-40">
 			{#each validRestaurants as { name, phone, delivery, url, urlType, slug }}
 				<li
-					class="transition-plus flex w-full flex-col self-center justify-self-center rounded-2xl bg-white/20 bg-linear-to-b from-white/10 from-20% to-white/30 p-20 shadow-lg inset-shadow-sm shadow-black/10 inset-shadow-white/15 backdrop-blur-sm backdrop-saturate-120 not-dark:backdrop-brightness-110 has-[[data-intersect]]:rounded-3xl has-[[data-intersect]]:backdrop-blur-xl lg:w-[50vw] lg:max-w-1200 lg:rounded-4xl lg:p-40 lg:has-[[data-intersect]]:rounded-[4rem] dark:bg-black/30 dark:from-black/5 dark:to-black/15 dark:inset-shadow-white/5 dark:backdrop-brightness-95"
+					class="transition-plus flex w-full flex-col self-center justify-self-center rounded-2xl bg-white/20 bg-linear-to-b from-white/10 from-20% to-white/30 p-20 shadow-lg inset-shadow-sm shadow-black/10 inset-shadow-white/15 backdrop-blur-sm backdrop-saturate-120 not-dark:backdrop-brightness-110 has-data-intersect:rounded-3xl has-data-intersect:backdrop-blur-xl lg:w-[50vw] lg:max-w-1200 lg:rounded-4xl lg:p-40 lg:has-data-intersect:rounded-[4rem] dark:bg-black/30 dark:from-black/5 dark:to-black/15 dark:inset-shadow-white/5 dark:backdrop-brightness-95"
 				>
 					{#if slug in myChoices && otherChoices.every(({ selected }) => slug in selected)}
-							<div
-								data-intersect="true"
-								class="motion-preset-pop motion-delay-175 flex items-center gap-8 pb-20 font-medium max-lg:mr-auto max-lg:flex-row-reverse lg:ml-auto lg:hidden"
-								transition:slide
-							>
-								Intersekti!
+						<div
+							data-intersect="true"
+							class="motion-preset-pop motion-delay-175 flex items-center gap-8 pb-20 font-medium max-lg:mr-auto max-lg:flex-row-reverse lg:ml-auto lg:hidden"
+							transition:slide
+						>
+							Intersekti!
 
-								<Icon
-									icon="pixelarticons:bullseye-arrow"
-									class="size-26 rounded-md bg-amber-200 p-2 text-amber-800 dark:bg-amber-700 dark:text-amber-950"
-								/>
-							</div>
-						{/if}
+							<Icon
+								icon="pixelarticons:bullseye-arrow"
+								class="size-26 rounded-md bg-amber-200 p-2 text-amber-800 dark:bg-amber-700 dark:text-amber-950"
+							/>
+						</div>
+					{/if}
 
 					<div class="flex items-center gap-10">
 						<p class="font-display flex items-center gap-10 text-4xl leading-none">
@@ -226,7 +239,7 @@
 						{#if slug in myChoices && otherChoices.every(({ selected }) => slug in selected)}
 							<div
 								data-intersect="true"
-								class="motion-preset-pop motion-delay-175 flex items-center gap-8 pb-20 font-medium max-lg:mr-auto max-lg:flex-row-reverse lg:ml-auto max-lg:hidden"
+								class="motion-preset-pop motion-delay-175 flex items-center gap-8 pb-20 font-medium max-lg:mr-auto max-lg:hidden max-lg:flex-row-reverse lg:ml-auto"
 								transition:slide
 							>
 								Intersekti!
