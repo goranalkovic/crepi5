@@ -95,12 +95,15 @@
 				<optgroup label="Ljudeki">
 					<option value="aco">Aco</option>
 					<option value="ceh">Čeh</option>
-					<option value="goc">Goc</option>
+					<option value="goc">Goc (2025)</option>
+					<option value="goc2026">Goc (2026)</option>
 					<option value="hrvoic">Hrvoic</option>
 					<option value="jurica">Jurica</option>
 					<option value="jurica2">Jurica 2</option>
+					<option value="jurassic">Jurassic</option>
 					<option value="kanc">Kanc</option>
 					<option value="my10">My10</option>
+					<option value="maizen">mAIzen</option>
 					<option value="petarjadek">Petar Jadek</option>
 					<option value="tamara">Tamara</option>
 				</optgroup>
