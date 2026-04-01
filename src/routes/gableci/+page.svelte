@@ -263,7 +263,7 @@
 										/>
 
 										<Icon
-											icon={myChoices?.[slug]?.[`i${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
+											icon={myChoices?.[slug]?.[`i${index}`] ? 'pixelarticons:checkbox-on' : 'pixelarticons:checkbox'}
 											class="size-28 shrink-0 duration-200 ease-out group-hover:scale-105 group-active:scale-95 {myChoices?.[slug]?.[
 												`i${index}`
 											] && 'motion-preset-shake'} motion-duration-500 motion-ease-spring-bounciest"
@@ -360,7 +360,7 @@
 										/>
 
 										<Icon
-											icon={myChoices?.[slug]?.[`c${index}`] ? 'pixelarticons:checkbox' : 'pixelarticons:checkbox-on'}
+											icon={myChoices?.[slug]?.[`c${index}`] ? 'pixelarticons:checkbox-on' : 'pixelarticons:checkbox'}
 											class="size-28 shrink-0 {myChoices?.[slug]?.[`c${index}`] &&
 												'motion-preset-shake'} motion-duration-500 motion-ease-spring-bounciest"
 										/>
